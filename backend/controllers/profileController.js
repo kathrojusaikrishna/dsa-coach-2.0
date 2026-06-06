@@ -1,0 +1,34 @@
+const Profile = require("../models/Profile");
+
+const CreateProfile = async (req, res) => {
+  try {
+    const { leetcodeUsername, codeforcesUsername, gfgUsername } = req.body;
+
+    const profile = await Profile.create({
+      userId: req.user.id,
+      leetcodeUsername,
+      codeforcesUsername,
+      gfgUsername,
+    });
+
+    res.status(200).json(profile);
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
+};
+
+const getProfile = async (req, res) => {
+  try {
+    const profile = await Profile.findOne({ userId: req.user.id });
+
+    res.status(200).json(profile);
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
+};
+
+module.exports = { CreateProfile, getProfile };
