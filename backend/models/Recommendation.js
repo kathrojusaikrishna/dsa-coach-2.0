@@ -18,7 +18,7 @@ const recommendationSchema = new mongoose.Schema({
 
   link: {
     type: String,
-    requied: true,
+    required: true,
   },
 });
 

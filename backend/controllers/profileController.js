@@ -4,6 +4,16 @@ const CreateProfile = async (req, res) => {
   try {
     const { leetcodeUsername, codeforcesUsername, gfgUsername } = req.body;
 
+    const existingProfile = await Profile.findOne({
+      userId: req.user.id,
+    });
+
+    if (existingProfile) {
+      return res.status(400).json({
+        message: "Profile already exists",
+      });
+    }
+
     const profile = await Profile.create({
       userId: req.user.id,
       leetcodeUsername,
