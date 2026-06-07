@@ -12,16 +12,6 @@ const ProfileSchema = new mongoose.Schema(
       type: String,
       default: "",
     },
-
-    codeforcesUsername: {
-      type: String,
-      default: "",
-    },
-
-    gfgUsername: {
-      type: String,
-      default: "",
-    },
   },
   {
     timestamps: true,

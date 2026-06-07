@@ -2,7 +2,7 @@ const Profile = require("../models/Profile");
 
 const CreateProfile = async (req, res) => {
   try {
-    const { leetcodeUsername, codeforcesUsername, gfgUsername } = req.body;
+    const { leetcodeUsername } = req.body;
 
     const existingProfile = await Profile.findOne({
       userId: req.user.id,
@@ -17,8 +17,6 @@ const CreateProfile = async (req, res) => {
     const profile = await Profile.create({
       userId: req.user.id,
       leetcodeUsername,
-      codeforcesUsername,
-      gfgUsername,
     });
 
     res.status(200).json(profile);

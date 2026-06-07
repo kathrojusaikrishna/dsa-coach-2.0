@@ -7,6 +7,7 @@ const recommendationHistorySchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
+
     problemId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Recommendation",
@@ -32,6 +33,11 @@ const recommendationHistorySchema = new mongoose.Schema(
     timestamps: true,
   },
 );
+
+recommendationHistorySchema.index({
+  userId: 1,
+  problemId: 1,
+});
 
 module.exports = mongoose.model(
   "RecommendationHistory",
