@@ -6,7 +6,7 @@ const getRecommendations = async (req, res) => {
   try {
     const stats = await LeetcodeStats.findOne({
       userId: req.user.id,
-    });
+    }).lean();
 
     if (!stats) {
       return res.status(404).json({
@@ -29,7 +29,7 @@ const getRecommendations = async (req, res) => {
       status: {
         $in: ["solved", "skipped"],
       },
-    });
+    }).lean();
 
     const excludedProblemIds = history.map((item) => item.problemId);
 
@@ -94,36 +94,37 @@ const getRecommendations = async (req, res) => {
 
     const recommendations = [];
 
-    for (const problem of problems) {
-      await RecommendationHistory.findOneAndUpdate(
-        {
-          userId: req.user.id,
-          problemId: problem._id,
-        },
-        {
-          $setOnInsert: {
-            status: "recommended",
-            recommendedAt: new Date(),
+    await RecommendationHistory.bulkWrite(
+      problems.map((problem) => ({
+        updateOne: {
+          filter: {
+            userId: req.user.id,
+            problemId: problem._id,
           },
-        },
-        {
+          update: {
+            $setOnInsert: {
+              status: "recommended",
+              recommendedAt: new Date(),
+            },
+          },
           upsert: true,
-          returnDocument: "after",
         },
-      );
+      })),
+    );
 
+    const recommendations = problems.map((problem) => {
       const matchedTopics = problem.topic.filter((topic) =>
         weakTopics.includes(topic),
       );
 
-      recommendations.push({
+      return {
         ...problem,
         reason:
           matchedTopics.length > 0
             ? `Weak topic: ${matchedTopics.join(", ")}`
             : `Recommended ${difficulty} problem`,
-      });
-    }
+      };
+    });
 
     res.status(200).json({
       level: difficulty,
