@@ -456,65 +456,148 @@ body {
 
   color: #64748b;
 }
-@media (max-width: 768px) {
+
+/* ================= TABLETS ================= */
+@media (max-width: 1024px) {
   .hero {
     flex-direction: column;
-    justify-content: center;
-    gap: 2rem;
-  }
-
-  .hero-left {
-    height: auto;
-    width: auto;
+    text-align: center;
+    padding: 60px 32px;
+    gap: 4rem;
   }
 
   .hero-title {
-    font-size: 1.5rem;
+    font-size: 4rem;
   }
 
   .hero-text {
-    font-size: 0.95rem;
+    width: 100%;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .dashboard-preview {
+    width: 100%;
+    max-width: 600px;
   }
 
   .features,
   .how-it-works,
   .about,
   .cta {
-    padding: 60px 16px;
+    padding: 80px 32px;
   }
 
   .section-title,
   .how-it-works h2,
   .cta h2 {
-    font-size: 1.8rem;
-    margin-bottom: 30px;
+    font-size: 2.5rem;
   }
 }
 
-@media (max-width: 480px) {
+/* ================= PHONES ================= */
+@media (max-width: 768px) {
+  .hero {
+    padding: 40px 20px;
+    min-height: auto;
+  }
+
+  .hero-left,
+  .hero-right {
+    width: 100%;
+  }
+
   .hero-title {
-    font-size: 2rem;
+    font-size: 2.8rem;
+    line-height: 1.2;
   }
 
   .hero-text {
-    font-size: 0.9rem;
+    width: 100%;
+    font-size: 1rem;
+  }
+
+  .hero-buttons {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .primary-btn,
+  .secondary-btn {
+    width: 100%;
+  }
+
+  .dashboard-preview {
+    width: 100%;
+    grid-template-columns: 1fr;
+  }
+
+  .preview-header,
+  .recommend-box {
+    grid-column: span 1;
   }
 
   .hero-card {
-    max-width: 280px;
-    padding: 16px;
+    width: 100%;
+    max-width: 350px;
+  }
+
+  .features,
+  .how-it-works,
+  .about,
+  .cta {
+    padding: 60px 20px;
   }
 
   .section-title,
   .how-it-works h2,
   .cta h2 {
-    font-size: 1.5rem;
+    font-size: 2rem;
+    margin-bottom: 30px;
+  }
+
+  .timeline-item {
+    gap: 16px;
+  }
+
+  .step-number {
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+  }
+
+  .timeline-item:not(:last-child)::after {
+    left: 19px;
+  }
+
+  .cta-box {
+    padding: 32px 20px;
+  }
+}
+
+/* ================= SMALL PHONES ================= */
+@media (max-width: 480px) {
+  .hero-title {
+    font-size: 2.2rem;
+  }
+
+  .hero-text {
+    font-size: 0.95rem;
+  }
+
+  .hero-card {
+    max-width: 100%;
+    padding: 20px;
   }
 
   .feature-card,
-  .step-content,
-  .cta-box {
-    padding: 16px;
+  .step-content {
+    padding: 18px;
+  }
+
+  .feature-card h3,
+  .step-content h3 {
+    font-size: 1rem;
   }
 
   .feature-card p,
@@ -522,5 +605,24 @@ body {
   .about p,
   .cta p {
     font-size: 0.9rem;
+  }
+
+  .footer-links {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .footer h3 {
+    font-size: 1.4rem;
+  }
+
+  .footer p {
+    font-size: 0.9rem;
+  }
+
+  .cta h2,
+  .section-title,
+  .how-it-works h2 {
+    font-size: 1.7rem;
   }
 }
