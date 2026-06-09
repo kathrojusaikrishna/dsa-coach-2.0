@@ -31,4 +31,8 @@ const recommendationSchema = new mongoose.Schema(
   },
 );
 
+// Indexes
+recommendationSchema.index({ difficulty: 1 });
+recommendationSchema.index({ topic: 1 });
+
 module.exports = mongoose.model("Recommendation", recommendationSchema);

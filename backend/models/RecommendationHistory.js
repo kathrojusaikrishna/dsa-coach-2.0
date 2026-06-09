@@ -34,9 +34,15 @@ const recommendationHistorySchema = new mongoose.Schema(
   },
 );
 
+// Indexes
 recommendationHistorySchema.index({
   userId: 1,
   problemId: 1,
+});
+
+recommendationHistorySchema.index({
+  userId: 1,
+  status: 1,
 });
 
 module.exports = mongoose.model(

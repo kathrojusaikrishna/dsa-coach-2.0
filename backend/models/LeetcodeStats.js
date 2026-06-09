@@ -20,4 +20,8 @@ const leetcodeStatsSchema = new mongoose.Schema({
   },
 });
 
+leetcodeStatsSchema.index({
+  userId: 1,
+});
+
 module.exports = mongoose.model("LeetcodeStats", leetcodeStatsSchema);
