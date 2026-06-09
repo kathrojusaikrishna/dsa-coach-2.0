@@ -92,8 +92,6 @@ const getRecommendations = async (req, res) => {
       ]);
     }
 
-    const recommendations = [];
-
     await RecommendationHistory.bulkWrite(
       problems.map((problem) => ({
         updateOne: {
