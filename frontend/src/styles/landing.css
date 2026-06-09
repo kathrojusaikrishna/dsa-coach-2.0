@@ -456,3 +456,71 @@ body {
 
   color: #64748b;
 }
+@media (max-width: 768px) {
+  .hero {
+    flex-direction: column;
+    justify-content: center;
+    gap: 2rem;
+  }
+
+  .hero-left {
+    height: auto;
+    width: auto;
+  }
+
+  .hero-title {
+    font-size: 1.5rem;
+  }
+
+  .hero-text {
+    font-size: 0.95rem;
+  }
+
+  .features,
+  .how-it-works,
+  .about,
+  .cta {
+    padding: 60px 16px;
+  }
+
+  .section-title,
+  .how-it-works h2,
+  .cta h2 {
+    font-size: 1.8rem;
+    margin-bottom: 30px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-title {
+    font-size: 2rem;
+  }
+
+  .hero-text {
+    font-size: 0.9rem;
+  }
+
+  .hero-card {
+    max-width: 280px;
+    padding: 16px;
+  }
+
+  .section-title,
+  .how-it-works h2,
+  .cta h2 {
+    font-size: 1.5rem;
+  }
+
+  .feature-card,
+  .step-content,
+  .cta-box {
+    padding: 16px;
+  }
+
+  .feature-card p,
+  .step-content p,
+  .about p,
+  .cta p {
+    font-size: 0.9rem;
+  }
+}

@@ -64,7 +64,7 @@ export default function Hero() {
   });
 
   return (
-    <section className="hero">
+    <section className="hero" id="hero">
       <div className="hero-left">
         <h1 ref={titleRef} className="hero-title">
           Stop Solving.

@@ -108,7 +108,7 @@ LeetCode Profile
 
 ### Recommendations
 
-![Recommendations](screenshots/recommendations.png)
+![Recommendations](screenshots/Recommendations.png)
 
 ### Revision Queue
 
@@ -116,7 +116,7 @@ LeetCode Profile
 
 ### Profile
 
-![Profile](screenshots/profile.png)
+![Profile](screenshots/Profile.png)
 
 ---
 
