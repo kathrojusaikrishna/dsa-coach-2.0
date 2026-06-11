@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import api from "../services/api";
 import "../styles/auth.css";
 import toast from "react-hot-toast";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
 
 export default function Register() {
   const navigate = useNavigate();
@@ -20,6 +22,16 @@ export default function Register() {
       [e.target.name]: e.target.value,
     });
   };
+
+  //gsap
+  useGSAP(() => {
+    gsap.from(".auth-card", {
+      y: 40,
+      opacity: 0,
+      duration: 1,
+      ease: "power3.out",
+    });
+  });
 
   const handleSubmit = async (e) => {
     e.preventDefault();

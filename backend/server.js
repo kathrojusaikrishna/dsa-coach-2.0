@@ -13,6 +13,7 @@ const authRoutes = require("./routes/authRoutes");
 const profileRoutes = require("./routes/profileRoutes");
 const leetcodeRoutes = require("./routes/leetcodeRoutes");
 const recommendationRoutes = require("./routes/recommendationRoutes");
+const resumeRoutes = require("./routes/resumeRoutes");
 
 const app = express();
 
@@ -38,6 +39,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/leetcode", leetcodeRoutes);
 
 app.use("/api/recommendations", recommendationRoutes);
+app.use("/api/resume", resumeRoutes);
 
 app.listen(process.env.PORT, () => {
   console.log("server is running...");

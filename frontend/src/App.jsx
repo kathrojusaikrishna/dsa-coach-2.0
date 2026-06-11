@@ -9,6 +9,7 @@ import Landing from "./pages/Landing";
 import Profile from "./pages/Profile";
 import Recommendations from "./pages/Recommendations";
 import Revision from "./pages/Revision";
+import ResumeAnalyzer from "./pages/ResumeAnalyzer";
 
 export default function App() {
   return (
@@ -21,6 +22,7 @@ export default function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/recommendations" element={<Recommendations />} />
         <Route path="/revision" element={<Revision />} />
+        <Route path="/resume-analyzer" element={<ResumeAnalyzer />} />
       </Routes>
     </BrowserRouter>
   );

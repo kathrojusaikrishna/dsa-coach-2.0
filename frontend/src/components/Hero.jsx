@@ -1,8 +1,10 @@
 import { useRef } from "react";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
+import { useNavigate } from "react-router-dom";
 
 export default function Hero() {
+  const navigate = useNavigate();
   const titleRef = useRef(null);
   const textRef = useRef(null);
   const buttonsRef = useRef(null);
@@ -78,7 +80,9 @@ export default function Hero() {
         </p>
 
         <div ref={buttonsRef} className="hero-buttons">
-          <button className="primary-btn">Get Started</button>
+          <button className="primary-btn" onClick={() => navigate("/register")}>
+            Get Started
+          </button>
           <button
             className="secondary-btn"
             onClick={() => {
