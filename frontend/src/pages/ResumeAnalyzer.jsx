@@ -2,6 +2,7 @@ import { useState } from "react";
 import api from "../services/api";
 import "../styles/ResumeAnalysis.css";
 import Sidebar from "../components/Sidebar";
+import toast from "react-hot-toast";
 
 function ResumeAnalyzer() {
   const [file, setFile] = useState(null);
@@ -33,12 +34,7 @@ function ResumeAnalyzer() {
     } catch (error) {
       console.error(error);
 
-      if (error.response?.status === 429) {
-        alert(error.response.data.message);
-        return;
-      }
-
-      alert(error.response?.data?.message || "Analysis failed");
+      toast.error(error.response?.data?.message || "Resume analysis failed");
     } finally {
       setLoading(false);
     }
