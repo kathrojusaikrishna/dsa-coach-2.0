@@ -1,9 +1,17 @@
 const axios = require("axios");
 const LeetcodeStats = require("../models/LeetcodeStats");
 const Profile = require("../models/Profile");
+const { redisClient } = require("../config/redis");
 
 const getLeetcodeStats = async (req, res) => {
   try {
+    const cacheKey = `leetcode:${req.user.id}`;
+
+    const cachedStats = await redisClient.get(cacheKey);
+
+    if (cachedStats) {
+      return res.status(200).json(JSON.parse(cachedStats));
+    }
     const profile = await Profile.findOne({ userId: req.user.id });
 
     if (!profile) {
@@ -71,6 +79,8 @@ const getLeetcodeStats = async (req, res) => {
         returnDocument: "after",
       },
     );
+
+    await redisClient.set(cacheKey, JSON.stringify(savedStats), { EX: 3600 });
 
     res.status(200).json(savedStats);
   } catch (error) {

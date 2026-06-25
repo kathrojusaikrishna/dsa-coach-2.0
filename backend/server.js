@@ -4,6 +4,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const connectDB = require("./config/db");
+const { connectRedis } = require("./config/redis");
 
 //middlewares
 const authMiddleware = require("./middleware/authMiddleware");
@@ -17,7 +18,14 @@ const resumeRoutes = require("./routes/resumeRoutes");
 
 const app = express();
 
-connectDB();
+const startServer = async () => {
+  await connectDB();
+  await connectRedis();
+
+  app.listen(process.env.PORT, () => {
+    console.log("server is running...");
+  });
+};
 
 app.use(cors());
 app.use(express.json());
@@ -41,6 +49,4 @@ app.use("/api/leetcode", leetcodeRoutes);
 app.use("/api/recommendations", recommendationRoutes);
 app.use("/api/resume", resumeRoutes);
 
-app.listen(process.env.PORT, () => {
-  console.log("server is running...");
-});
+startServer();

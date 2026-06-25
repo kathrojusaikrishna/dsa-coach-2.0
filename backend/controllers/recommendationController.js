@@ -1,9 +1,16 @@
 const Recommendation = require("../models/Recommendation");
 const LeetcodeStats = require("../models/LeetcodeStats");
 const RecommendationHistory = require("../models/RecommendationHistory");
+const { redisClient } = require("../config/redis");
 
 const getRecommendations = async (req, res) => {
   try {
+    const cacheKey = `recommendations:${req.user.id}`;
+    const cachedRecommendations = await redisClient.get(cacheKey);
+
+    if (cachedRecommendations) {
+      return res.status(200).json(JSON.parse(cachedRecommendations));
+    }
     const stats = await LeetcodeStats.findOne({
       userId: req.user.id,
     }).lean();
@@ -124,12 +131,16 @@ const getRecommendations = async (req, res) => {
       };
     });
 
-    res.status(200).json({
+    const responseData = {
       level: difficulty,
       totalSolved: stats.totalSolved,
       weakTopics,
       recommendations,
-    });
+    };
+
+    await redisClient.set(cacheKey, JSON.stringify(responseData), { EX: 3600 });
+
+    res.status(200).json(responseData);
   } catch (error) {
     res.status(500).json({
       message: error.message,
@@ -155,6 +166,11 @@ const markSolved = async (req, res) => {
         returnDocument: "after",
       },
     );
+
+    await redisClient.del(`recommendations:${req.user.id}`);
+    await redisClient.del(`memory:${req.user.id}`);
+    await redisClient.del(`readiness:${req.user.id}`);
+    await redisClient.del(`weaktopics:${req.user.id}`);
 
     res.status(200).json({
       message: "Problem marked as solved",
@@ -183,6 +199,11 @@ const markSkipped = async (req, res) => {
         returnDocument: "after",
       },
     );
+
+    await redisClient.del(`recommendations:${req.user.id}`);
+    await redisClient.del(`memory:${req.user.id}`);
+    await redisClient.del(`readiness:${req.user.id}`);
+    await redisClient.del(`weaktopics:${req.user.id}`);
 
     res.status(200).json({
       message: "Problem marked as skipped",
@@ -262,6 +283,12 @@ const getForgotProblems = async (req, res) => {
 
 const getMemoryScore = async (req, res) => {
   try {
+    const cacheKey = `memory:${req.user.id}`;
+    const cachedMemory = await redisClient.get(cacheKey);
+
+    if (cachedMemory) {
+      return res.status(200).json(JSON.parse(cachedMemory));
+    }
     const solvedProblems = await RecommendationHistory.find({
       userId: req.user.id,
       status: "solved",
@@ -303,13 +330,16 @@ const getMemoryScore = async (req, res) => {
     const score =
       (fresh * 100 + good * 75 + weak * 40 + forgotten * 10) / total;
 
-    res.json({
+    const responseData = {
       memoryStrength: Math.round(score),
       fresh,
       good,
       weak,
       forgotten,
-    });
+    };
+
+    await redisClient.set(cacheKey, JSON.stringify(responseData), { EX: 3600 });
+    res.status(200).json(responseData);
   } catch (error) {
     res.status(500).json({
       message: error.message,
@@ -319,6 +349,12 @@ const getMemoryScore = async (req, res) => {
 
 const getReadinessScore = async (req, res) => {
   try {
+    const cacheKey = `readiness:${req.user.id}`;
+    const cachedReadiness = await redisClient.get(cacheKey);
+
+    if (cachedReadiness) {
+      return res.status(200).json(JSON.parse(cachedReadiness));
+    }
     const stats = await LeetcodeStats.findOne({
       userId: req.user.id,
     });
@@ -346,11 +382,15 @@ const getReadinessScore = async (req, res) => {
 
     const readiness = Math.round(solvedScore * 0.7 + memoryStrength * 0.3);
 
-    res.json({
+    const responseData = {
       readiness,
       totalSolved: stats.totalSolved,
       memoryStrength,
-    });
+    };
+
+    await redisClient.set(cacheKey, JSON.stringify(responseData), { EX: 3600 });
+
+    res.status(200).json(responseData);
   } catch (error) {
     res.status(500).json({
       message: error.message,
@@ -360,6 +400,12 @@ const getReadinessScore = async (req, res) => {
 
 const getWeakTopics = async (req, res) => {
   try {
+    const cacheKey = `weaktopics:${req.user.id}`;
+    const cachedWeakTopics = await redisClient.get(cacheKey);
+
+    if (cachedWeakTopics) {
+      return res.status(200).json(JSON.parse(cachedWeakTopics));
+    }
     const history = await RecommendationHistory.find({
       userId: req.user.id,
       status: "solved",
@@ -383,9 +429,15 @@ const getWeakTopics = async (req, res) => {
         solvedCount: count,
       }));
 
-    res.status(200).json({
+    const responseData = {
       weakTopics,
+    };
+
+    await redisClient.set(cacheKey, JSON.stringify(responseData), {
+      EX: 86400,
     });
+
+    res.status(200).json(responseData);
   } catch (error) {
     res.status(500).json({
       message: error.message,
