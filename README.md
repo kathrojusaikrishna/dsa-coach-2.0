@@ -1,183 +1,361 @@
-# DSA Coach 2.0
+# 🚀 DSA Coach 2.0
 
 ![React](https://img.shields.io/badge/React-19-blue)
 ![Node.js](https://img.shields.io/badge/Node.js-Express-green)
 ![MongoDB](https://img.shields.io/badge/Database-MongoDB-brightgreen)
+![Redis](https://img.shields.io/badge/Cache-Redis-red)
 ![JWT](https://img.shields.io/badge/Auth-JWT-orange)
 
-## Overview
+## 🌐 Live Demo
 
-DSA Coach 2.0 is a full-stack MERN application that helps developers improve their Data Structures and Algorithms (DSA) preparation through personalized recommendations, memory-retention tracking, revision scheduling, and LeetCode analytics.
-
-The platform analyzes a user's LeetCode progress, identifies weak topics, recommends relevant problems, tracks solved questions, and estimates interview readiness.
+**Frontend:** https://dsa-coach-2-0.vercel.app
 
 ---
 
-## Features
+# Overview
 
-### Authentication
+DSA Coach 2.0 is a full-stack MERN application that helps developers prepare for coding interviews using personalized learning.
+
+The platform analyzes a user's LeetCode profile, identifies weak topics, recommends relevant problems, tracks memory retention, measures interview readiness, and provides resume analysis.
+
+To improve performance and scalability, Redis caching is integrated to reduce repeated database queries and unnecessary LeetCode API requests.
+
+---
+
+# Features
+
+## Authentication
 
 - User Registration & Login
-- JWT-based Authentication
+- JWT Authentication
 - Protected Routes
 
-### LeetCode Integration
+---
+
+## LeetCode Integration
 
 - Connect LeetCode Profile
-- Fetch and Store User Statistics
+- Fetch Live LeetCode Statistics
 - Sync Progress Anytime
+- Store User Progress
 
-### Personalized Recommendations
+---
 
+## Smart Recommendation Engine
+
+- Personalized Problem Recommendations
 - Difficulty-Based Recommendations
 - Weak Topic Detection
 - Recommendation History
-- Mark Problems as Solved or Skipped
+- Mark Problems as Solved
+- Skip Recommendations
 
-### Revision System
+---
+
+## Memory Retention System
 
 - Forgotten Problem Detection
 - Revision Queue
+- Memory Strength Score
 - Retention Classification
+- Revision Priority
 
-### Analytics Dashboard
+---
+
+## Analytics Dashboard
 
 - Interview Readiness Score
 - Memory Strength Score
 - Weak Topics Analysis
-- Memory Retention Visualization
 - Progress Tracking
+- LeetCode Statistics Visualization
 
 ---
 
-## Highlights
+## Resume Analyzer
 
-- 500+ LeetCode Problems Dataset
-- Personalized Recommendation Engine
-- Weak Topic Detection
-- Memory Retention Analytics
-- Interview Readiness Scoring
-- Full MERN Stack Architecture
+- Resume Upload
+- AI-powered Resume Analysis
+- ATS-style Feedback
+- Skill Gap Suggestions
 
-## Tech Stack
+---
 
-### Frontend
+# ⚡ Performance Optimizations
+
+Implemented Redis caching using the **Cache-Aside Pattern** to improve API performance.
+
+Cached APIs include:
+
+- LeetCode Statistics
+- Recommendation Engine
+- Memory Analytics
+- Interview Readiness
+- Weak Topics Analysis
+
+Additional Optimizations
+
+- Redis Cache Invalidation
+- Reduced MongoDB Queries
+- Reduced External LeetCode API Calls
+- TTL-based Cache Expiration
+
+---
+
+# 🏗 Architecture
+
+```
+                     React (Vercel)
+                            │
+                            │
+                       REST APIs
+                            │
+                            ▼
+                 Express.js Backend (Render)
+                            │
+          ┌─────────────────┼──────────────────┐
+          │                 │                  │
+          ▼                 ▼                  ▼
+    MongoDB Atlas      Redis Cache      LeetCode GraphQL
+          │
+          ▼
+ Recommendation Engine
+ Memory Analytics
+ Readiness Scoring
+ Resume Analysis
+```
+
+---
+
+# Tech Stack
+
+## Frontend
 
 - React.js
 - React Router
 - Axios
 - Recharts
 - React Hot Toast
+- CSS3
 
-### Backend
+---
+
+## Backend
 
 - Node.js
 - Express.js
 - MongoDB
 - Mongoose
+- Redis
 - JWT Authentication
-
-### Deployment
-
-- Vercel (Frontend)
-- Render (Backend)
-- MongoDB Atlas (Database)
+- Axios
 
 ---
 
-## Architecture
+## Deployment
 
-User
-→ React Frontend
-→ Express Backend
-→ MongoDB Atlas
-
-LeetCode Profile
-→ Analytics Engine
-→ Recommendation System
-→ Revision Queue
+- Vercel
+- Render
+- MongoDB Atlas
+- Redis Cloud
 
 ---
 
-## Screenshots
+# Key Engineering Highlights
 
-### Dashboard
+- Personalized Recommendation Engine
+- Weak Topic Detection
+- Memory Retention Analytics
+- Interview Readiness Prediction
+- Redis-based API Caching
+- Cache Invalidation Strategy
+- RESTful API Design
+- Modular Backend Architecture
+- MongoDB Aggregation Pipelines
+
+---
+
+# 📂 Project Structure
+
+```
+frontend/
+    components/
+    pages/
+    context/
+    charts/
+
+backend/
+    controllers/
+    routes/
+    middleware/
+    models/
+    config/
+```
+
+---
+
+# 📸 Screenshots
+
+## Dashboard
 
 ![Dashboard](screenshots/dashboard-top.png)
+
 ![Dashboard](screenshots/dashboard-bottom.png)
 
-### Recommendations
+---
+
+## Recommendations
 
 ![Recommendations](screenshots/Recommendations.png)
 
-### Revision Queue
+---
+
+## Revision Queue
 
 ![Revision](screenshots/revision.png)
 
-### Profile
+---
+
+## Profile
 
 ![Profile](screenshots/Profile.png)
 
 ---
 
-## Installation
+# 🔌 API Endpoints
 
-### Clone Repository
+## Authentication
+
+```
+POST /api/auth/register
+POST /api/auth/login
+```
+
+## Profile
+
+```
+GET /api/profile
+PUT /api/profile
+```
+
+## LeetCode
+
+```
+GET /api/leetcode
+```
+
+## Recommendations
+
+```
+GET /api/recommendations
+POST /api/recommendations/:id/solve
+POST /api/recommendations/:id/skip
+```
+
+## Analytics
+
+```
+GET /api/recommendations/memory
+GET /api/recommendations/readiness
+GET /api/recommendations/weaktopics
+GET /api/recommendations/history
+GET /api/recommendations/revision
+```
+
+---
+
+# ⚙ Installation
+
+## Clone Repository
 
 ```bash
 git clone https://github.com/kathrojusaikrishna/dsa-coach-2.0.git
+
 cd dsa-coach-2.0
 ```
 
-### Backend Setup
+---
+
+## Backend
 
 ```bash
 cd backend
+
 npm install
+
 npm run dev
 ```
 
-### Frontend Setup
+---
+
+## Frontend
 
 ```bash
 cd frontend
+
 npm install
+
 npm run dev
 ```
 
 ---
 
-## Environment Variables
+# 🔑 Environment Variables
 
-Backend `.env`
-
-```env
-MONGO_URI=your_mongodb_uri
-JWT_SECRET=your_secret
-```
-
-Frontend `.env`
+## Backend (.env)
 
 ```env
-VITE_API_URL=your_backend_url
+MONGO_URI=
+
+JWT_SECRET=
+
+REDIS_HOST=
+
+REDIS_PORT=
+
+REDIS_USERNAME=
+
+REDIS_PASSWORD=
 ```
 
 ---
 
-## Future Enhancements
+## Frontend (.env)
+
+```env
+VITE_API_URL=
+```
+
+---
+
+# Motivation
+
+Preparing for coding interviews usually involves solving random problems without tracking strengths and weaknesses.
+
+DSA Coach 2.0 aims to provide a personalized preparation experience by analyzing LeetCode progress, identifying weak concepts, recommending targeted problems, measuring memory retention, and estimating interview readiness.
+
+---
+
+# 🚀 Future Improvements
 
 - Codeforces Integration
-- GeeksForGeeks Integration
+- GeeksforGeeks Integration
 - Contest Tracking
-- Spaced-Repetition Revision System
-- AI-Powered Problem Recommendations
+- Spaced-Repetition Scheduler
+- AI-powered Recommendation Engine
+- Email Reminders
+- Daily Challenge Notifications
 
 ---
 
-## Author
+# Author
 
 **Saikrishna Kathroju**
 
 GitHub: https://github.com/kathrojusaikrishna
 
 LinkedIn: https://www.linkedin.com/in/kathroju-saikrishna/
+
+---
+
+# If you found this project interesting, consider giving it a star!
