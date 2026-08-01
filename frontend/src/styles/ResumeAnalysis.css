@@ -261,14 +261,18 @@
   }
 }
 
-@media (max-width: 600px) {
-  .score-grid {
-    grid-template-columns: 1fr;
+@media (max-width: 768px) {
+  .resume-page {
+    position: relative;
+    margin-left: 0;
+    width: 100%;
+    padding: 20px 16px;
+    left: 0;
+    top: 0;
   }
 
-  .resume-page {
-    margin-left: 0;
-    padding: 20px;
+  .score-grid {
+    grid-template-columns: 1fr;
   }
 
   .resume-title {
