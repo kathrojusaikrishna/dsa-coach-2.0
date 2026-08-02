@@ -77,7 +77,7 @@ function ResumeAnalyzer() {
             onClick={handleSubmit}
             disabled={loading}
           >
-            {loading ? "Analyzing..." : "Analyze Resume"}
+            {loading ? <div className="analyze-load"></div> : "Analyze Resume"}
           </button>
 
           {analysis && (

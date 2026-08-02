@@ -74,22 +74,7 @@ export default function Dashboard() {
     fetchDashboardData();
   }, []);
 
-  if (loading)
-    return (
-      <h2
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          marginTop: "23rem",
-          color: "#7c3aed",
-          fontSize: "32px",
-          fontFamily: "sans-serif",
-        }}
-      >
-        Dashboard Loading...
-      </h2>
-    );
+  if (loading) return <div className="loading-box">{""}</div>;
   return (
     <div className="dashboard">
       <Sidebar />

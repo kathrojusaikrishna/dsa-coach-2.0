@@ -50,6 +50,23 @@
   z-index: 2;
 }
 
+.login-load {
+  height: 10px;
+  width: 10px;
+  border-top: 2px solid white;
+  border-radius: 50%;
+
+  animation: load 1s linear infinite;
+}
+
+@keyframes load {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
 .auth-card h1 {
   text-align: center;
 
@@ -103,6 +120,10 @@
 
 .auth-btn {
   margin-top: 10px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   padding: 14px;
 

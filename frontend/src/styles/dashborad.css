@@ -4,6 +4,37 @@
   background: #09090b;
 }
 
+.loading-box {
+  position: fixed;
+  border-top: 4px solid #7c3aed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+
+  animation: rotate 1s linear infinite;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.name-load {
+  height: 10px;
+  width: 10px;
+  border-radius: 50%;
+  border-top: 2px solid white;
+
+  animation: rotate 1s linear infinite;
+}
+
 .sidebar {
   width: 240px;
   padding: 30px;
@@ -233,6 +264,68 @@
   text-decoration: none;
 
   transition: 0.3s;
+}
+
+.edit-btn,
+button {
+  border: none;
+  height: 38px;
+  padding: 6px;
+  background-color: dimgray;
+  color: #cbd5e1;
+  border-radius: 10px;
+  margin-left: 0.6rem;
+  transition: all 0.1s ease-in-out;
+}
+
+.edit-btn:hover {
+  background-color: #09090b;
+  transform: translateY(-3px);
+  cursor: pointer;
+}
+
+.background-util {
+  opacity: 0.1;
+  pointer-events: none;
+  user-select: none;
+}
+
+.modal-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  height: 150px;
+  width: 500px;
+  padding: 1rem;
+  background-color: #202027;
+  position: fixed;
+  inset: 0;
+  top: 50%;
+  left: 50%;
+
+  border-radius: 1rem;
+
+  z-index: 1000;
+  transform: translate(-50%, -50%);
+}
+
+.heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.input-box {
+  margin: auto;
+  display: flex;
+}
+
+.input-box input {
+  border: none;
+  padding: 0.6rem;
+  border-radius: 0.6rem;
+  background-color: #09152b;
+  color: #cbd5e1;
 }
 
 .leetcode-btn:hover {

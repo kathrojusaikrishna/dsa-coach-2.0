@@ -4,6 +4,7 @@ import api from "../services/api";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 import toast from "react-hot-toast";
+import { FaTimes } from "react-icons/fa";
 
 gsap.registerPlugin(useGSAP);
 export default function Profile() {
@@ -11,10 +12,13 @@ export default function Profile() {
   const [profile, setProfile] = useState(null);
   const [leetcodeUsername, setLeetcodeUsername] = useState("");
   const [loading, setLoading] = useState(true);
+  const [update, setUpdate] = useState(false);
 
   const [stats, setStats] = useState(null);
   const [readiness, setReadiness] = useState(0);
   const [memoryStrength, setMemoryStrength] = useState(0);
+
+  const [modalOpen, setModelOpen] = useState(false);
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -52,6 +56,18 @@ export default function Profile() {
     fetchProfile();
   }, []);
 
+  useEffect(() => {
+    if (modalOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [modalOpen]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -62,9 +78,34 @@ export default function Profile() {
 
       setProfile(res.data);
 
-      alert("Profile connected!");
+      toast.success("Profile connected!");
     } catch (error) {
-      alert(error.response?.data?.message || "Something went wrong");
+      toast.error(error.response?.data?.message || "Something went wrong");
+    }
+  };
+
+  const handleUpdate = async (e) => {
+    e.preventDefault();
+    setUpdate(true);
+    try {
+      const res = await api.put("/profile/update", {
+        leetcodeUsername,
+      });
+
+      setProfile(res.data);
+
+      console.log(res.data);
+
+      await handleSync();
+      setModelOpen(false);
+
+      toast.success("Successfully changed the username");
+    } catch (error) {
+      toast.error(
+        error.response?.data?.message || "Cannot update the username right now",
+      );
+    } finally {
+      setUpdate(false);
     }
   };
 
@@ -89,28 +130,41 @@ export default function Profile() {
   };
 
   if (loading) {
-    return (
-      <h2
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          marginTop: "23rem",
-          color: "#7c3aed",
-          fontSize: "32px",
-          fontFamily: "sans-serif",
-        }}
-      >
-        Loading...
-      </h2>
-    );
+    return <div className="loading-box"></div>;
   }
 
   return (
     <div className="dashboard">
       <Sidebar />
 
-      <main className="dashboard-content">
+      {modalOpen && (
+        <form onSubmit={handleUpdate}>
+          <div className="modal-container">
+            <div className="heading">
+              <h2>Change Username</h2>
+              <FaTimes
+                style={{ cursor: "pointer" }}
+                onClick={() => setModelOpen(!modalOpen)}
+              />
+            </div>
+            <div className="input-box">
+              <input
+                type="text"
+                placeholder="Leetcode Username"
+                value={leetcodeUsername}
+                onChange={(e) => setLeetcodeUsername(e.target.value)}
+              />
+              <button type="submit" className="edit-btn">
+                {update ? <div className="name-load"></div> : "Change"}
+              </button>
+            </div>
+          </div>
+        </form>
+      )}
+
+      <main
+        className={`dashboard-content ${modalOpen ? "background-util" : ""}`}
+      >
         <h1>Profile</h1>
 
         {!profile ? (
@@ -168,6 +222,13 @@ export default function Profile() {
 
                   <button className="profile-btn" onClick={handleSync}>
                     Sync LeetCode Stats
+                  </button>
+                  <button
+                    className="edit-btn"
+                    onClick={() => setModelOpen(!modalOpen)}
+                  >
+                    {" "}
+                    Change Username
                   </button>
                 </div>
 

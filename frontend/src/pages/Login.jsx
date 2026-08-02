@@ -9,6 +9,7 @@ import toast from "react-hot-toast";
 
 export default function Login() {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -34,6 +35,7 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    setLoading(true);
     try {
       const res = await api.post("/auth/login", formData);
       localStorage.setItem("token", res.data.token);
@@ -43,6 +45,8 @@ export default function Login() {
     } catch (error) {
       console.log(error);
       toast.error(error.response?.data?.message || "login failed");
+    } finally {
+      setLoading(false);
     }
   };
   return (
@@ -70,7 +74,7 @@ export default function Login() {
           />
 
           <button type="submit" className="auth-btn">
-            Login
+            {loading ? <div className="login-load"></div> : "Login"}
           </button>
         </form>
 
