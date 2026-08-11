@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { lowercase } = require("zod");
 
 const UserSchema = new mongoose.Schema(
   {
@@ -10,6 +11,8 @@ const UserSchema = new mongoose.Schema(
       type: String,
       required: true,
       unique: true,
+      lowercase: true,
+      trim: true,
     },
     password: {
       type: String,

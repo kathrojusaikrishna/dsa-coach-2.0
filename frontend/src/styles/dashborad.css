@@ -266,8 +266,7 @@
   transition: 0.3s;
 }
 
-.edit-btn,
-button {
+.edit-btn {
   border: none;
   height: 38px;
   padding: 6px;
@@ -294,9 +293,10 @@ button {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  height: 150px;
-  width: 500px;
-  padding: 1rem;
+  width: min(500px, 90vw);
+  max-width: 500px;
+  min-height: 150px;
+  padding: 1.5rem;
   background-color: #202027;
   position: fixed;
   inset: 0;
@@ -748,6 +748,26 @@ button {
    ========================== */
 
 @media (max-width: 768px) {
+  .modal-container {
+    width: 90%;
+    padding: 1.2rem;
+    height: auto;
+  }
+
+  .input-box {
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+  }
+
+  .input-box input {
+    width: 100%;
+  }
+
+  .input-box .edit-btn {
+    width: 100%;
+    margin-left: 0;
+  }
   .dashboard {
     flex-direction: column;
   }
@@ -839,6 +859,11 @@ button {
 /* Extra Small Phones */
 
 @media (max-width: 480px) {
+  .modal-container {
+    width: 90%;
+    padding: 1.2rem;
+    height: auto;
+  }
   .dashboard-content {
     padding: 16px;
   }
