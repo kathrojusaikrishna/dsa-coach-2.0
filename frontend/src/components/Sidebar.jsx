@@ -6,6 +6,9 @@ import {
   FaBrain,
   FaSignOutAlt,
   FaBookOpen,
+  FaComments,
+  FaBriefcase,
+  FaEnvelope,
 } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
@@ -44,6 +47,20 @@ export default function Sidebar() {
         <NavLink to={"/resume-analyzer"}>
           <FaBookOpen />
           Resume
+        </NavLink>
+        <NavLink to="/community">
+          <FaComments />
+          Community
+        </NavLink>
+
+        <NavLink to="/community?type=job">
+          <FaBriefcase />
+          Jobs & Internships
+        </NavLink>
+
+        <NavLink to="/messages">
+          <FaEnvelope />
+          Messages
         </NavLink>
       </nav>
       <button className="logout-btn" onClick={handleLogout}>

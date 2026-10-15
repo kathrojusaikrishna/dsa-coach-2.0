@@ -55,6 +55,34 @@ export default function Hero() {
         },
         "-=0.2",
       );
+    const words = gsap.utils.toArray(".rotator-word");
+
+    gsap.set(words, { yPercent: 100, opacity: 0 });
+    gsap.set(words[0], { yPercent: 0, opacity: 1 });
+
+    const loop = gsap.timeline({ repeat: -1, delay: 2.5 }); // waits for the intro to finish
+
+    words.forEach((word, i) => {
+      const next = words[(i + 1) % words.length];
+
+      loop
+        .to(
+          word,
+          {
+            yPercent: -100,
+            opacity: 0,
+            duration: 0.6,
+            ease: "power3.inOut",
+          },
+          "+=1.8",
+        )
+        .fromTo(
+          next,
+          { yPercent: 100, opacity: 0 },
+          { yPercent: 0, opacity: 1, duration: 0.6, ease: "power3.inOut" },
+          "<",
+        );
+    });
 
     gsap.to(".hero-right", {
       y: -10,
@@ -71,7 +99,16 @@ export default function Hero() {
         <h1 ref={titleRef} className="hero-title">
           Stop Solving.
           <br />
-          Start Retaining.
+          Start{" "}
+          <span className="rotator" aria-label="Retaining">
+            {["Retaining.", "Mastering.", "Recalling.", "Cracking."].map(
+              (w) => (
+                <span key={w} className="rotator-word">
+                  {w}
+                </span>
+              ),
+            )}
+          </span>
         </h1>
 
         <p ref={textRef} className="hero-text">
