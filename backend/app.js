@@ -14,10 +14,12 @@ const recommendationRoutes = require("./routes/recommendationRoutes");
 const resumeRoutes = require("./routes/resumeRoutes");
 const errorHandler = require("./middleware/errorHandler");
 const sanitizeRequest = require("./middleware/sanitize");
+const communityRoutes = require("./routes/communityRoutes");
+const chatRoutes = require("./routes/chatRoutes");
 
 const app = express();
-const allowedOrigins = (process.env.FRONTEND_URL || "http://localhost:5173")
-  .split(",")
+app.set("trust proxy", 1);
+const allowedOrigins = process.env.FRONTEND_URL.split(",")
   .map((origin) => origin.trim())
   .filter(Boolean);
 
@@ -53,6 +55,10 @@ app.use("/api/leetcode", leetcodeRoutes);
 app.use("/api/recommendations", recommendationRoutes);
 
 app.use("/api/resume", resumeRoutes);
+
+app.use("/api/community", communityRoutes);
+
+app.use("/api/chat", chatRoutes);
 
 app.use(errorHandler);
 

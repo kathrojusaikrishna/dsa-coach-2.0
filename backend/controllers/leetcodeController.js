@@ -12,6 +12,7 @@ const getLeetcodeStats = async (req, res) => {
     if (cachedStats) {
       return res.status(200).json(JSON.parse(cachedStats));
     }
+
     const profile = await Profile.findOne({ userId: req.user.id });
 
     if (!profile) {
@@ -20,7 +21,13 @@ const getLeetcodeStats = async (req, res) => {
       });
     }
 
-    const username = profile.leetcodeUsername;
+    const username = profile.leetcodeUsername?.trim();
+
+    if (!username) {
+      return res.status(400).json({
+        message: "Set your LeetCode username in Profile first.",
+      });
+    }
 
     const query = {
       query: `
@@ -46,19 +53,24 @@ const getLeetcodeStats = async (req, res) => {
       },
     };
 
-    const response = await axios.post("https://leetcode.com/graphql", query);
+    const response = await axios.post("https://leetcode.com/graphql", query, {
+      timeout: 10000,
+    });
 
-    const userData = response.data.data.matchedUser;
+    const userData = response.data?.data?.matchedUser;
+
+    if (!userData) {
+      return res.status(404).json({
+        message: `LeetCode user "${username}" not found. Check your username in Profile.`,
+      });
+    }
 
     const stats = userData.submitStats.acSubmissionNum;
 
     const totalSolved = stats.find((s) => s.difficulty === "All")?.count || 0;
-
     const easySolved = stats.find((s) => s.difficulty === "Easy")?.count || 0;
-
     const mediumSolved =
       stats.find((s) => s.difficulty === "Medium")?.count || 0;
-
     const hardSolved = stats.find((s) => s.difficulty === "Hard")?.count || 0;
 
     const ranking = userData.profile.ranking;
@@ -84,11 +96,11 @@ const getLeetcodeStats = async (req, res) => {
 
     res.status(200).json(savedStats);
   } catch (error) {
-    console.error(error);
+    console.error(error.message);
     console.error(error.response?.data);
 
     res.status(500).json({
-      message: error.message,
+      message: "Unable to fetch LeetCode stats",
     });
   }
 };
