@@ -1,4 +1,4 @@
-# 🚀 DSA Coach 2.0
+#  DSA Coach 2.0
 
 ![React](https://img.shields.io/badge/React-19-blue)
 ![Node.js](https://img.shields.io/badge/Node.js-Express_5-green)
